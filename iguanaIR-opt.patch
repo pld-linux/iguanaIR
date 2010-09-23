@@ -1,0 +1,27 @@
+--- iguanaIR-1.0pre2/autoconf/configure.ac.orig	2009-11-05 02:57:36.000000000 +0100
++++ iguanaIR-1.0pre2/autoconf/configure.ac	2010-09-22 20:02:11.700556463 +0200
+@@ -59,14 +59,11 @@
+ AC_CHECK_FUNCS([floor gettimeofday memset mkdir select socket strchr strdup strerror strrchr strspn strstr mach_absolute_time])
+ 
+ # Some default environment variable values
+-CFLAGS="-Wall -pedantic"
++CFLAGS="$CFLAGS -Wall -pedantic"
+ 
+ # use -Wextra when possible
+ AX_CFLAGS_GCC_OPTION(-Wextra)
+ 
+-# TODO: really just want this when we NEED -fPIC
+-# AX_CFLAGS_GCC_OPTION(-fPIC)
+-
+ # enable and disable debugging
+ AC_ARG_ENABLE(debug,
+   [  --enable-debug configure with debugging features enabled ],
+@@ -77,8 +74,6 @@
+ if test x$ENABLE_DEBUG_FLAGS = xyes; then
+   CPPFLAGS="$CPPFLAGS -D_DEBUG"
+   CFLAGS="$CFLAGS -g"
+-else
+-  CFLAGS="$CFLAGS -O2"
+ fi
+ 
+ # Allow the user to override clock_gettime detection
