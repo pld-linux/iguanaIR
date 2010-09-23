@@ -5,8 +5,8 @@ Name:		iguanaIR
 Version:	1.0
 %define	subver	pre2
 Release:	0.%{subver}.0.1
-License:	- (enter GPL/LGPL/BSD/BSD-like/other license name here)
-Group:		Applications/Communication
+License:	GPL v2
+Group:		Applications/Communications
 Source0:	http://iguanaworks.net/downloads/%{name}-%{version}%{subver}.tar.bz2
 # Source0-md5:	719c41ab69350bc64e0fbfaadf604f13
 URL:		http://iguanaworks.net/
@@ -28,7 +28,8 @@ Iguanaworks.
 %package -n udev-%{name}
 Summary:	udev rules for iguanaIR driver
 Summary(pl.UTF-8):	Reguły udeva do sterownika iguanaIR
-Group:		Applications/Communication
+License:	GPL v2
+Group:		Applications/Communications
 Requires:	%{name} = %{version}-%{release}
 Requires:	udev-core
 
@@ -41,6 +42,7 @@ Reguły udeva do sterownika iguanaIR.
 %package libs
 Summary:	iguanaIR shared library
 Summary(pl.UTF-8):	Biblioteka współdzielona iguanaIR
+License:	LGPL v2.1
 Group:		Libraries
 
 %description libs
@@ -53,6 +55,7 @@ na USB firmy Iguanaworks.
 %package devel
 Summary:	Header files for iguanaIR library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki iguanaIR
+License:	LGPL v2.1
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 
@@ -65,6 +68,7 @@ Pliki nagłówkowe biblioteki iguanaIR.
 %package -n python-%{name}
 Summary:	Python binding for iguanaIR library
 Summary(pl.UTF-8):	Interfejs Pythona do biblioteki iguanaIR
+License:	GPL v2
 Group:		Libraries/Python
 Requires:	%{name}-libs = %{version}-%{release}
 
