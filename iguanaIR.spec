@@ -4,11 +4,13 @@ Summary(pl.UTF-8):	Sterownik do nadajnika-odbiornika podczerwieni na USB firmy I
 Name:		iguanaIR
 Version:	1.0
 %define	subver	pre2
-Release:	0.%{subver}.0.1
+Release:	0.%{subver}.0.2
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	http://iguanaworks.net/downloads/%{name}-%{version}%{subver}.tar.bz2
 # Source0-md5:	719c41ab69350bc64e0fbfaadf604f13
+Patch0:		%{name}-opt.patch
+Patch1:		%{name}-lib64.patch
 URL:		http://iguanaworks.net/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
@@ -80,6 +82,10 @@ Interfejs Pythona do biblioteki iguanaIR.
 
 %prep
 %setup -q -n %{name}-%{version}%{subver}
+%patch0 -p1
+%ifarch %{x8664}
+%patch1 -p1
+%endif
 
 %build
 cd autoconf
