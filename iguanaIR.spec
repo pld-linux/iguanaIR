@@ -1,9 +1,9 @@
 # TODO: PLDize init script, use /etc/sysconfig instead of /etc/default
 Summary:	Driver for Iguanaworks USB IR transceiver
 Summary(pl.UTF-8):	Sterownik do nadajnika-odbiornika podczerwieni na USB firmy Iguanaworks
+%define	subver	pre2
 Name:		iguanaIR
 Version:	1.0
-%define	subver	pre2
 Release:	0.%{subver}.0.2
 License:	GPL v2
 Group:		Applications/Communications
@@ -16,6 +16,9 @@ BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	libusb-compat-devel >= 0.1.0
 BuildRequires:	popt-devel
+BuildRequires:	python-devel
+BuildRequires:	python-modules
+BuildRequires:	rpm-pythonprov
 BuildRequires:	swig-python >= 1.3.31
 Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -94,7 +97,7 @@ cd autoconf
 %{__autoheader}
 cd ..
 %configure \
-	PYTHON_SITE_PKG=%{python_sitearch}
+	PYTHON_SITE_PKG=%{py_sitedir}
 %{__make}
 
 %install
@@ -106,8 +109,8 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/rc.d
 mv -f $RPM_BUILD_ROOT/etc/init.d $RPM_BUILD_ROOT/etc/rc.d
 
-%py_comp $RPM_BUILD_ROOT%{python_sitearch}
-%py_ocomp $RPM_BUILD_ROOT%{python_sitearch}
+%py_comp $RPM_BUILD_ROOT%{py_sitedir}
+%py_ocomp $RPM_BUILD_ROOT%{py_sitedir}
 %py_postclean
 
 %{__rm} docs/Makefile
@@ -148,5 +151,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n python-%{name}
 %defattr(644,root,root,755)
-%attr(755,root,root) %{python_sitearch}/_iguanaIR.so
-%{python_sitearch}/iguanaIR.py[co]
+%attr(755,root,root) %{py_sitedir}/_iguanaIR.so
+%{py_sitedir}/iguanaIR.py[co]
