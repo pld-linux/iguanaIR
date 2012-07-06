@@ -1,14 +1,13 @@
 # TODO: PLDize init script, use /etc/sysconfig instead of /etc/default
 Summary:	Driver for Iguanaworks USB IR transceiver
 Summary(pl.UTF-8):	Sterownik do nadajnika-odbiornika podczerwieni na USB firmy Iguanaworks
-%define	subver	pre2
 Name:		iguanaIR
-Version:	1.0
-Release:	0.%{subver}.1
+Version:	1.0.1
+Release:	1
 License:	GPL v2
 Group:		Applications/Communications
-Source0:	http://iguanaworks.net/downloads/%{name}-%{version}%{subver}.tar.bz2
-# Source0-md5:	719c41ab69350bc64e0fbfaadf604f13
+Source0:	http://iguanaworks.net/downloads/%{name}-%{version}.tar.bz2
+# Source0-md5:	cf9e6e7939ff9d76aa985fab8c6f5af7
 Patch0:		%{name}-opt.patch
 Patch1:		%{name}-lib64.patch
 URL:		http://iguanaworks.net/
@@ -21,6 +20,7 @@ BuildRequires:	python-modules
 BuildRequires:	rpm-pythonprov
 BuildRequires:	swig-python >= 1.3.31
 Requires:	%{name}-libs = %{version}-%{release}
+Obsoletes:	udev-iguanaIR
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -29,20 +29,6 @@ Driver for Iguanaworks USB IR transceiver.
 %description -l pl.UTF-8
 Sterownik do nadajnika-odbiornika podczerwieni na USB firmy
 Iguanaworks.
-
-%package -n udev-%{name}
-Summary:	udev rules for iguanaIR driver
-Summary(pl.UTF-8):	Reguły udeva do sterownika iguanaIR
-License:	GPL v2
-Group:		Applications/Communications
-Requires:	%{name} = %{version}-%{release}
-Requires:	udev-core
-
-%description -n udev-%{name}
-udev rules for iguanaIR driver.
-
-%description -n udev-%{name} -l pl.UTF-8
-Reguły udeva do sterownika iguanaIR.
 
 %package libs
 Summary:	iguanaIR shared library
@@ -84,7 +70,7 @@ Python binding for iguanaIR library.
 Interfejs Pythona do biblioteki iguanaIR.
 
 %prep
-%setup -q -n %{name}-%{version}%{subver}
+%setup -q
 %patch0 -p1
 %ifarch %{x8664}
 %patch1 -p1
@@ -132,11 +118,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/iguanaIR-reflasher
 %attr(755,root,root) %{_libdir}/iguanaIR-reflasher/iguanaIR-reflasher
 %{_libdir}/iguanaIR-reflasher/hex
-%attr(754,root,root) /etc/rc.d/init.d/iguanaIR
-
-%files -n udev-%{name}
-%defattr(644,root,root,755)
 /lib/udev/rules.d/80-iguanaIR.rules
+%attr(754,root,root) /etc/rc.d/init.d/iguanaIR
 
 %files libs
 %defattr(644,root,root,755)
