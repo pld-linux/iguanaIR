@@ -9,7 +9,6 @@ Group:		Applications/Communications
 Source0:	http://iguanaworks.net/downloads/%{name}-%{version}.tar.bz2
 # Source0-md5:	cf9e6e7939ff9d76aa985fab8c6f5af7
 Patch0:		%{name}-opt.patch
-Patch1:		%{name}-lib64.patch
 URL:		http://iguanaworks.net/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
@@ -72,9 +71,6 @@ Interfejs Pythona do biblioteki iguanaIR.
 %prep
 %setup -q
 %patch0 -p1
-%ifarch %{x8664}
-%patch1 -p1
-%endif
 
 %build
 cd autoconf
