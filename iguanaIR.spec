@@ -4,7 +4,7 @@ Summary(pl.UTF-8):	Sterownik do nadajnika-odbiornika podczerwieni na USB firmy I
 %define	subver	pre2
 Name:		iguanaIR
 Version:	1.0
-Release:	0.%{subver}.0.2
+Release:	0.%{subver}.1
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	http://iguanaworks.net/downloads/%{name}-%{version}%{subver}.tar.bz2
@@ -136,7 +136,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n udev-%{name}
 %defattr(644,root,root,755)
-%dir /lib/udev/devices/iguanaIR
 /lib/udev/rules.d/80-iguanaIR.rules
 
 %files libs
