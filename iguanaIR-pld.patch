@@ -1,0 +1,80 @@
+--- iguanaIR-1.1.0/files/base/etc/init.d/iguanaIR.orig	2013-07-22 19:09:46.000000000 +0200
++++ iguanaIR-1.1.0/files/base/etc/init.d/iguanaIR	2015-10-05 19:33:06.875889209 +0200
+@@ -22,7 +22,7 @@
+ ######################
+ 
+ # load the default settings
+-[ -f /etc/default/iguanaIR ] && . /etc/default/iguanaIR
++[ -f /etc/sysconfig/iguanaIR ] && . /etc/sysconfig/iguanaIR
+ # combine some variables into a command line
+ IGUANAIR_OPTIONS="$OPTIONS --log-level=$LOGLEVEL --send-timeout=$SENDTIMEOUT --receive-timeout=$RECEIVETIMEOUT $DRIVERS"
+ SOCKDIR=/var/run/iguanaIR
+@@ -32,20 +32,7 @@
+ # First try lsb, if it exists, if not then use our
+ # /etc/issue hack.
+ 
+-LSBLOCATION=`which lsb_release`
+-
+-if [ "$DISTRO" = "" ]; then
+-
+-	if [ -x "$LSBLOCATION" ]; then
+-		DISTRO=`lsb_release -s -i | tr 'A-Z' 'a-z'`
+-	else
+-		DISTRO=`head -1 /etc/issue | sed 's/ .*//' | tr 'A-Z' 'a-z'`
+-	fi
+-fi
+-
+-if [ "$DISTRO" = "fedora" -o "$DISTRO" = "mythdora" -o "$DISTRO" = "centos" -o "$DISTRO" = "rhel" -o "$DISTRO" = "scientific" ]; then
+-    # welcome to fedora land
+-    . /etc/init.d/functions
++    . /etc/rc.d/init.d/functions
+ 
+     # fedora needs these variables
+     LOCKFILE=/var/lock/subsys/iguanaIR
+@@ -60,24 +47,7 @@
+     {
+         echo
+     }
+-elif [ "$DISTRO" = "gentoo" ]; then
+-    # hello gentoo?
+-    . /etc/init.d/functions.sh
+-    log_begin_msg()
+-    {
+-        ebegin $*
+-    }
+-    log_end_msg()
+-    {
+-        eend $*
+-    }
+-else
+-    if [ "$DISTRO" != "debian" -a "$DISTRO" != "ubuntu" ]; then
+-        echo "WARNING: failed to recognize distro, defaulting to Debian."
+-    fi
+-    # ubuntu and others
+-    . /lib/lsb/init-functions
+-fi
++
+ # common defaults
+ IGPATH=/usr/bin/igdaemon
+ LOGFILE=/var/log/iguanaIR.log
+@@ -85,7 +55,7 @@
+ 
+ # check for the executable exists
+ if [ ! -x $IGPATH ]; then
+-    echo $"Failed to find igdaemon executable."
++    echo "Failed to find igdaemon executable."
+     exit 1
+ fi
+ 
+@@ -161,9 +131,9 @@
+ usage()
+ {
+     if [ "$LOCKFILE" != "" ]; then
+-        echo $"Usage: $0 {start|stop|status|restart|condrestart|force-restart}"
++        echo "Usage: $0 {start|stop|status|restart|condrestart|force-restart}"
+     else
+-        echo $"Usage: $0 {start|stop|status|restart|force-restart}"
++        echo "Usage: $0 {start|stop|status|restart|force-restart}"
+     fi
+     RETVAL=1
+ }

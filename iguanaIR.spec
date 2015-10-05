@@ -1,18 +1,20 @@
-# TODO: PLDize init script, use /etc/sysconfig instead of /etc/default
+# TODO: PLDize init script further
 Summary:	Driver for Iguanaworks USB IR transceiver
 Summary(pl.UTF-8):	Sterownik do nadajnika-odbiornika podczerwieni na USB firmy Iguanaworks
 Name:		iguanaIR
-Version:	1.0.1
-Release:	2
+Version:	1.1.0
+Release:	1
 License:	GPL v2
 Group:		Applications/Communications
+#Source0Download: http://www.iguanaworks.net/files/
 Source0:	http://iguanaworks.net/downloads/%{name}-%{version}.tar.bz2
-# Source0-md5:	cf9e6e7939ff9d76aa985fab8c6f5af7
+# Source0-md5:	798eda1de8873c8da41fb50ffe221140
 Patch0:		%{name}-opt.patch
+Patch1:		%{name}-soname.patch
+Patch2:		%{name}-pld.patch
 URL:		http://iguanaworks.net/
-BuildRequires:	autoconf >= 2.59
-BuildRequires:	automake
-BuildRequires:	libusb-compat-devel >= 0.1.0
+BuildRequires:	cmake >= 2.6
+BuildRequires:	libusb-devel >= 1.0
 BuildRequires:	popt-devel
 BuildRequires:	python-devel
 BuildRequires:	python-modules
@@ -71,25 +73,25 @@ Interfejs Pythona do biblioteki iguanaIR.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
-cd autoconf
-%{__aclocal}
-%{__autoconf} --output=../configure
-%{__autoheader}
-cd ..
-%configure \
-	PYTHON_SITE_PKG=%{py_sitedir}
+install -d build
+cd build
+%cmake ..
+
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT/etc/rc.d
-mv -f $RPM_BUILD_ROOT/etc/init.d $RPM_BUILD_ROOT/etc/rc.d
+%{__mv} $RPM_BUILD_ROOT/etc/init.d $RPM_BUILD_ROOT/etc/rc.d
+%{__mv} $RPM_BUILD_ROOT/etc/default $RPM_BUILD_ROOT/etc/sysconfig
 
 %py_comp $RPM_BUILD_ROOT%{py_sitedir}
 %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}
@@ -109,13 +111,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/igclient
 %attr(755,root,root) %{_bindir}/igdaemon
 %attr(755,root,root) %{_bindir}/iguanaIR-reflasher
+%attr(755,root,root) %{_bindir}/iguanaIR-rescan
 %dir %{_libdir}/iguanaIR
-%attr(755,root,root) %{_libdir}/iguanaIR/*.so
-%dir %{_libdir}/iguanaIR-reflasher
-%attr(755,root,root) %{_libdir}/iguanaIR-reflasher/iguanaIR-reflasher
-%{_libdir}/iguanaIR-reflasher/hex
+%attr(755,root,root) %{_libdir}/iguanaIR/libusb.so
+%dir %{_datadir}/iguanaIR-reflasher
+%attr(755,root,root) %dir %{_datadir}/iguanaIR-reflasher/iguanaIR-reflasher
+%{_datadir}/iguanaIR-reflasher/hex
 /lib/udev/rules.d/80-iguanaIR.rules
 %attr(754,root,root) /etc/rc.d/init.d/iguanaIR
+%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/iguanaIR
 
 %files libs
 %defattr(644,root,root,755)
@@ -123,7 +127,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc protocols.txt
 %attr(755,root,root) %{_libdir}/libiguanaIR.so
 %{_includedir}/iguanaIR.h
 
