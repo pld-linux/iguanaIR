@@ -79,7 +79,8 @@ Interfejs Pythona do biblioteki iguanaIR.
 %build
 install -d build
 cd build
-%cmake ..
+%cmake .. \
+	-DLIBDIR:PATH=%{_libdir}
 
 %{__make}
 
