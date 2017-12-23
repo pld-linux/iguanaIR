@@ -1,5 +1,5 @@
---- iguanaIR-1.1.0/files/base/etc/init.d/iguanaIR.orig	2013-07-22 19:09:46.000000000 +0200
-+++ iguanaIR-1.1.0/files/base/etc/init.d/iguanaIR	2015-10-05 19:33:06.875889209 +0200
+--- iguanair-1.2.0/software/usb_ir/files/sysV/etc/init.d/iguanaIR.orig	2013-07-22 19:09:46.000000000 +0200
++++ iguanair-1.2.0/software/usb_ir/files/sysV/etc/init.d/iguanaIR	2015-10-05 19:33:06.875889209 +0200
 @@ -22,7 +22,7 @@
  ######################
  
@@ -78,3 +78,19 @@
      fi
      RETVAL=1
  }
+--- iguanair-9336f121b4127f4ac494e5b26b82ce9c6b86a0ac/software/usb_ir/CMakeLists.txt.orig	2017-12-22 18:30:06.221553102 +0100
++++ iguanair-9336f121b4127f4ac494e5b26b82ce9c6b86a0ac/software/usb_ir/CMakeLists.txt	2017-12-22 21:47:59.598084195 +0100
+@@ -303,12 +303,11 @@
+               DESTINATION bin)
+     ElseIf("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
+       message(STATUS "No initscript or iguanaIR-rescan installed in OS X.")
+-    Else()
++    EndIf()
+       install(PROGRAMS files/sysV/usr/bin/iguanaIR-rescan
+               DESTINATION bin)
+       install(DIRECTORY files/sysV/etc
+               USE_SOURCE_PERMISSIONS
+               DESTINATION ${ETC_PARENT})
+-    EndIf()
+   EndIf()
+ EndIf()

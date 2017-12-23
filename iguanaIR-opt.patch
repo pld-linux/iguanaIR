@@ -1,11 +1,10 @@
---- iguanaIR-1.1.0/CMakeLists.txt.orig	2013-07-28 19:08:08.000000000 +0200
-+++ iguanaIR-1.1.0/CMakeLists.txt	2015-10-05 16:07:49.326406232 +0200
-@@ -68,7 +68,7 @@
-       Set(DAEMONLIBS pthread dl)
-     EndIf()
+--- iguanair-9336f121b4127f4ac494e5b26b82ce9c6b86a0ac/software/usb_ir/CMakeLists.txt.orig	2017-12-22 16:26:48.778304231 +0100
++++ iguanair-9336f121b4127f4ac494e5b26b82ce9c6b86a0ac/software/usb_ir/CMakeLists.txt	2017-12-22 16:52:15.058286803 +0100
+@@ -62,7 +62,6 @@
+   Set(DAEMONSRC daemon.c)
+   List(APPEND BASESRC compat-unix.c)
+   Set(CMAKE_REQUIRED_FLAGS "-I/usr/include")
+-  add_c_flag(-pedantic -g -O2)
  
--    Set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O2 -Wall -pedantic")
-+    Set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -pedantic")
- 
-     # see if we have clock_gettime in time.h
-     Set(CMAKE_REQUIRED_LIBRARIES rt)
+   # see if we have clock_gettime possibly in rt
+   check_library_exists(rt clock_gettime "time.h" HAVE_CLOCK_GETTIME)

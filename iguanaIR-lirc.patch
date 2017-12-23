@@ -1,0 +1,11 @@
+--- iguanair-9336f121b4127f4ac494e5b26b82ce9c6b86a0ac/software/lirc-drv-iguanair/Makefile.orig	2017-10-19 03:17:33.000000000 +0200
++++ iguanair-9336f121b4127f4ac494e5b26b82ce9c6b86a0ac/software/lirc-drv-iguanair/Makefile	2017-12-23 11:35:43.997517116 +0100
+@@ -42,7 +42,7 @@
+ $(driver).o: $(driver).c
+ 
+ $(driver).so: $(driver).o
+-	gcc --shared -fpic -o $@ $< $(LDFLAGS)
++	$(CC) $(LDFLAGS) $(CFLAGS) --shared -fpic -o $@ $<
+ 
+ install: $(driver).so
+ 	install -D $< $(DESTDIR)$(PLUGINDIR)/$<
