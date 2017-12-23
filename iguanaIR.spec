@@ -122,7 +122,8 @@ cd build
 %cmake ../software/usb_ir \
 	-DLIBDIR:PATH=%{_libdir}
 
-%{__make}
+# j1: version.h vs compile race
+%{__make} -j1
 cd ..
 
 %if %{with lirc}
@@ -162,6 +163,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
+
+%triggerpostun libs -- iguanaIR-libs < 1.2.0
+rm -f %{_libdir}/libiguanaIR.so.0
+/sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
