@@ -127,9 +127,9 @@ cd build
 cd ..
 
 %if %{with lirc}
+CFLAGS="%{rpmcflags}" \
 %{__make} -C software/lirc-drv-iguanair \
 	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags}" \
 	CPPFLAGS="%{rpmcppflags}" \
 	LDFLAGS="%{rpmldflags}"
 %endif
@@ -219,6 +219,6 @@ rm -f %{_libdir}/libiguanaIR.so.0
 %doc software/lirc-drv-iguanair/iguanair.txt
 %attr(755,root,root) %{_libdir}/lirc/plugins/iguanair.so
 %{_datadir}/lirc/configs/iguanair.conf
-%{_datadir}/lirc/plugindocs/iguanair.html
+%{_docdir}/lirc/plugindocs/iguanair.html
 /etc/modprobe.d/60-blacklist-kernel-iguanair.conf
 %endif
