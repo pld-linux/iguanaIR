@@ -9,7 +9,7 @@ Name:		iguanaIR
 Version:	1.2.0
 %define	snap	20171020
 %define	gitref	9336f121b4127f4ac494e5b26b82ce9c6b86a0ac
-%define	rel	2
+%define	rel	3
 Release:	1.%{snap}.%{rel}
 License:	GPL v2
 Group:		Applications/Communications
