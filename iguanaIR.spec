@@ -116,6 +116,9 @@ Sterownik iguanaIR dla LIRC-a.
 %patch1 -p1
 %patch2 -p1
 
+%{__sed} -E -i -e '1s,#!\s*/usr/bin/env\s+python(\s|$),#!%{__python3}\1,' \
+      software/usb_ir/files/python/usr/share/iguanaIR-reflasher/iguanaIR-reflasher
+
 %build
 install -d build
 cd build
@@ -178,7 +181,7 @@ rm -f %{_libdir}/libiguanaIR.so.0
 %dir %{_libdir}/iguanaIR
 %attr(755,root,root) %{_libdir}/iguanaIR/libusbdrv.so
 %dir %{_datadir}/iguanaIR-reflasher
-%attr(755,root,root) %dir %{_datadir}/iguanaIR-reflasher/iguanaIR-reflasher
+%attr(755,root,root) %{_datadir}/iguanaIR-reflasher/iguanaIR-reflasher
 %{_datadir}/iguanaIR-reflasher/hex
 /lib/udev/rules.d/80-iguanaIR.rules
 %attr(754,root,root) /etc/rc.d/init.d/iguanaIR
