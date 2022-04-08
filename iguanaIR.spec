@@ -9,7 +9,7 @@ Name:		iguanaIR
 Version:	1.2.0
 %define	snap	20171020
 %define	gitref	9336f121b4127f4ac494e5b26b82ce9c6b86a0ac
-%define	rel	7
+%define	rel	8
 Release:	1.%{snap}.%{rel}
 License:	GPL v2
 Group:		Applications/Communications
@@ -20,6 +20,7 @@ Source0:	https://github.com/iguanaworks/iguanair/archive/%{gitref}/iguanair-%{sn
 Patch0:		%{name}-opt.patch
 Patch1:		%{name}-pld.patch
 Patch2:		%{name}-lirc.patch
+Patch3:		python-version.patch
 URL:		http://iguanaworks.net/
 BuildRequires:	cmake >= 2.6
 BuildRequires:	libusb-devel >= 1.0
@@ -115,6 +116,7 @@ Sterownik iguanaIR dla LIRC-a.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %{__sed} -E -i -e '1s,#!\s*/usr/bin/env\s+python(\s|$),#!%{__python3}\1,' \
       software/usb_ir/files/python/usr/share/iguanaIR-reflasher/iguanaIR-reflasher
