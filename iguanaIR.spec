@@ -6,22 +6,19 @@
 Summary:	Driver for Iguanaworks USB IR transceiver
 Summary(pl.UTF-8):	Sterownik do nadajnika-odbiornika podczerwieni na USB firmy Iguanaworks
 Name:		iguanaIR
-Version:	1.2.0
-%define	snap	20171020
-%define	gitref	9336f121b4127f4ac494e5b26b82ce9c6b86a0ac
-%define	rel	8
-Release:	1.%{snap}.%{rel}
+Version:	1.2.1
+Release:	1
 License:	GPL v2
 Group:		Applications/Communications
 # formerly (up to 1.1.0): http://www.iguanaworks.net/files/
-# now https://github.com/iguanaworks/iguanair/releases /usb_ir- (but 1.2.0 is not tagged)
-Source0:	https://github.com/iguanaworks/iguanair/archive/%{gitref}/iguanair-%{snap}.tar.gz
-# Source0-md5:	a20ba738cbdf654526190d2b86e70992
+#Source0Download: https://github.com/iguanaworks/iguanair/tags
+Source0:	https://github.com/iguanaworks/iguanair/archive/%{version}/iguanair-%{version}.tar.gz
+# Source0-md5:	3c607a75bae4a057fba1c63b79bd0149
 Patch0:		%{name}-opt.patch
 Patch1:		%{name}-pld.patch
 Patch2:		%{name}-lirc.patch
 Patch3:		python-version.patch
-URL:		http://iguanaworks.net/
+URL:		https://www.iguanaworks.net/
 BuildRequires:	cmake >= 2.6
 BuildRequires:	libusb-devel >= 1.0
 %{?with_lirc:BuildRequires:	lirc-devel >= 0.9.4}
@@ -37,7 +34,7 @@ BuildRequires:	udev-devel
 BuildRequires:	systemd-devel >= 1:209
 BuildRequires:	swig-python >= 1.3.31
 Requires:	%{name}-libs = %{version}-%{release}
-Obsoletes:	udev-iguanaIR
+Obsoletes:	udev-iguanaIR < 1.0.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -112,14 +109,14 @@ iguanaIR driver for LIRC.
 Sterownik iguanaIR dla LIRC-a.
 
 %prep
-%setup -q -n iguanair-%{gitref}
+%setup -q -n iguanair-%{version}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 
-%{__sed} -E -i -e '1s,#!\s*/usr/bin/env\s+python(\s|$),#!%{__python3}\1,' \
-      software/usb_ir/files/python/usr/share/iguanaIR-reflasher/iguanaIR-reflasher
+%{__sed} -i -e '1s,/usr/bin/env python$,%{__python3},' \
+	software/usb_ir/files/python/usr/share/iguanaIR-reflasher/iguanaIR-reflasher
 
 %build
 install -d build
@@ -175,7 +172,7 @@ rm -f %{_libdir}/libiguanaIR.so.0
 
 %files
 %defattr(644,root,root,755)
-%doc ChangeLog software/usb_ir/{AUTHORS,README.txt,WHY,docs}
+%doc ChangeLog README.md software/usb_ir/{AUTHORS,README.txt,WHY,docs}
 %attr(755,root,root) %{_bindir}/igclient
 %attr(755,root,root) %{_bindir}/igdaemon
 %attr(755,root,root) %{_bindir}/iguanaIR-reflasher
