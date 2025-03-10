@@ -7,7 +7,7 @@ Summary:	Driver for Iguanaworks USB IR transceiver
 Summary(pl.UTF-8):	Sterownik do nadajnika-odbiornika podczerwieni na USB firmy Iguanaworks
 Name:		iguanaIR
 Version:	1.2.1
-Release:	1
+Release:	
 License:	GPL v2
 Group:		Applications/Communications
 # formerly (up to 1.1.0): http://www.iguanaworks.net/files/
