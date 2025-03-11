@@ -7,7 +7,7 @@ Summary:	Driver for Iguanaworks USB IR transceiver
 Summary(pl.UTF-8):	Sterownik do nadajnika-odbiornika podczerwieni na USB firmy Iguanaworks
 Name:		iguanaIR
 Version:	1.2.1
-Release:	
+Release:	2
 License:	GPL v2
 Group:		Applications/Communications
 # formerly (up to 1.1.0): http://www.iguanaworks.net/files/
@@ -110,10 +110,10 @@ Sterownik iguanaIR dla LIRC-a.
 
 %prep
 %setup -q -n iguanair-%{version}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%patch -P 0 -p1
+%patch -P 1 -p1
+%patch -P 2 -p1
+%patch -P 3 -p1
 
 %{__sed} -i -e '1s,/usr/bin/env python$,%{__python3},' \
 	software/usb_ir/files/python/usr/share/iguanaIR-reflasher/iguanaIR-reflasher
